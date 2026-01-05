@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Website Control Panel</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="{{url_for('static', filename='dashboard.css')}}"
+        />
+    </head>
+    <body class="bg-black">
+        <div class="container">
+            <!-- Header -->
+            <div class="header-section">
+                <div
+                    class="header-content flex justify-between items-center mb-4"
+                >
+                    <div>
+                        <h1 class="text-3xl font-bold text-white">
+                            Website Control Panel
+                        </h1>
+                        <p class="text-gray-400 mt-1">
+                            Enable or disable websites by group or individually
+                        </p>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <span>{{context['avtr']}}</span>
+                        </div>
+                        <button id="logoutBtn" class="btn btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="text-sm text-gray-400">Total Sites</div>
+                        <div
+                            class="text-2xl font-bold text-white mt-1"
+                            id="totalSites"
+                        >
+                            0
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-sm text-gray-400">Enabled</div>
+                        <div
+                            class="text-2xl font-bold text-green mt-1"
+                            id="enabledSites"
+                        >
+                            0
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-sm text-gray-400">Disabled</div>
+                        <div
+                            class="text-2xl font-bold text-red mt-1"
+                            id="disabledSites"
+                        >
+                            0
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-sm text-gray-400">Groups</div>
+                        <div
+                            class="text-2xl font-bold text-blue mt-1"
+                            id="totalGroups"
+                        >
+                            0
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Sites Section -->
+            <div class="mt-6">
+                <h2 class="section-header">Single Sites</h2>
+
+                <!-- Single Site 1 -->
+                <div class="single-site-card">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="single-site-icon">
+                                <i class="fas fa-newspaper text-orange"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-white">
+                                    News Portal
+                                </h3>
+                                <p class="text-sm text-gray-400">
+                                    news.example.com
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="text-sm text-green font-medium status-text"
+                                >Enabled</span
+                            >
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    class="single-site-toggle"
+                                    data-site="news.example.com"
+                                    checked
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Site 2 -->
+                <div class="single-site-card">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="single-site-icon">
+                                <i class="fas fa-shopping-cart text-purple"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-white">
+                                    E-commerce Store
+                                </h3>
+                                <p class="text-sm text-gray-400">
+                                    shop.example.com
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="text-sm text-red font-medium status-text"
+                                >Disabled</span
+                            >
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    class="single-site-toggle"
+                                    data-site="shop.example.com"
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Site 3 -->
+                <div class="single-site-card">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="single-site-icon">
+                                <i class="fas fa-blog text-blue"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-white">
+                                    Blog Platform
+                                </h3>
+                                <p class="text-sm text-gray-400">
+                                    blog.example.com
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="text-sm text-green font-medium status-text"
+                                >Enabled</span
+                            >
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    class="single-site-toggle"
+                                    data-site="blog.example.com"
+                                    checked
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Site 4 -->
+                <div class="single-site-card">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="single-site-icon">
+                                <i class="fas fa-video text-yellow"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-white">
+                                    Streaming Service
+                                </h3>
+                                <p class="text-sm text-gray-400">
+                                    stream.example.com
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="text-sm text-green font-medium status-text"
+                                >Enabled</span
+                            >
+                            <label class="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    class="single-site-toggle"
+                                    data-site="stream.example.com"
+                                    checked
+                                />
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Domain Groups Section -->
+            <div class="mt-8">
+                <h2 class="section-header">Domain Groups</h2>
+
+                <!-- Google Group -->
+                <div class="group-card">
+                    <div
+                        class="group-header flex justify-between items-center"
+                        data-group="google"
+                    >
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                            <div
+                                class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"
+                            >
+                                <i class="fab fa-google text-blue"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center">
+                                    <h3 class="font-semibold text-white">
+                                        Google Services
+                                    </h3>
+                                    <span class="site-count">3</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mt-1">
+                                    Multiple Google domains
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="status-badge status-enabled"
+                                id="googleStatus"
+                            >
+                                All Enabled
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm text-gray-400"
+                                    >Group:</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-main-toggle"
+                                        data-group="google"
+                                        checked
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group-content">
+                        <div class="site-item">
+                            <div class="site-info">
+                                <div class="site-name">search.google.com</div>
+                                <div class="site-url">Google Search</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-sm text-green font-medium status-text"
+                                    >Enabled</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-site-toggle"
+                                        data-group="google"
+                                        data-site="search.google.com"
+                                        checked
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="site-item">
+                            <div class="site-info">
+                                <div class="site-name">drive.google.com</div>
+                                <div class="site-url">Google Drive</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-sm text-green font-medium status-text"
+                                    >Enabled</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-site-toggle"
+                                        data-group="google"
+                                        data-site="drive.google.com"
+                                        checked
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="site-item">
+                            <div class="site-info">
+                                <div class="site-name">docs.google.com</div>
+                                <div class="site-url">Google Docs</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-sm text-green font-medium status-text"
+                                    >Enabled</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-site-toggle"
+                                        data-group="google"
+                                        data-site="docs.google.com"
+                                        checked
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GitHub Group -->
+                <div class="group-card">
+                    <div
+                        class="group-header flex justify-between items-center"
+                        data-group="github"
+                    >
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                            <div
+                                class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"
+                            >
+                                <i class="fab fa-github text-purple"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center">
+                                    <h3 class="font-semibold text-white">
+                                        GitHub Services
+                                    </h3>
+                                    <span class="site-count">2</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mt-1">
+                                    GitHub platforms
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="status-badge status-disabled"
+                                id="githubStatus"
+                            >
+                                All Disabled
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm text-gray-400"
+                                    >Group:</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-main-toggle"
+                                        data-group="github"
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group-content" style="display: none">
+                        <div class="site-item">
+                            <div class="site-info">
+                                <div class="site-name">github.com</div>
+                                <div class="site-url">GitHub Main</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-sm text-red font-medium status-text"
+                                    >Disabled</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-site-toggle"
+                                        data-group="github"
+                                        data-site="github.com"
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="site-item">
+                            <div class="site-info">
+                                <div class="site-name">api.github.com</div>
+                                <div class="site-url">GitHub API</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-sm text-red font-medium status-text"
+                                    >Disabled</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-site-toggle"
+                                        data-group="github"
+                                        data-site="api.github.com"
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Internal Services Group -->
+                <div class="group-card">
+                    <div
+                        class="group-header flex justify-between items-center"
+                        data-group="internal"
+                    >
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                            <div
+                                class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center"
+                            >
+                                <i class="fas fa-server text-green"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center">
+                                    <h3 class="font-semibold text-white">
+                                        Internal Services
+                                    </h3>
+                                    <span class="site-count">4</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mt-1">
+                                    Various internal services
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="status-badge status-enabled"
+                                id="internalStatus"
+                            >
+                                All Enabled
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm text-gray-400"
+                                    >Group:</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-main-toggle"
+                                        data-group="internal"
+                                        checked
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group-content" style="display: none">
+                        <div class="site-item">
+                            <div class="site-info">
+                                <div class="site-name">auth.internal.com</div>
+                                <div class="site-url">
+                                    Authentication Service
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-sm text-green font-medium status-text"
+                                    >Enabled</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-site-toggle"
+                                        data-group="internal"
+                                        data-site="auth.internal.com"
+                                        checked
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="site-item">
+                            <div class="site-info">
+                                <div class="site-name">db.internal.com</div>
+                                <div class="site-url">Database Service</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-sm text-green font-medium status-text"
+                                    >Enabled</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-site-toggle"
+                                        data-group="internal"
+                                        data-site="db.internal.com"
+                                        checked
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="site-item">
+                            <div class="site-info">
+                                <div class="site-name">
+                                    storage.internal.com
+                                </div>
+                                <div class="site-url">Storage Service</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-sm text-green font-medium status-text"
+                                    >Enabled</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-site-toggle"
+                                        data-group="internal"
+                                        data-site="storage.internal.com"
+                                        checked
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="site-item">
+                            <div class="site-info">
+                                <div class="site-name">
+                                    analytics.internal.com
+                                </div>
+                                <div class="site-url">Analytics Service</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-sm text-green font-medium status-text"
+                                    >Enabled</span
+                                >
+                                <label class="toggle-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="group-site-toggle"
+                                        data-group="internal"
+                                        data-site="analytics.internal.com"
+                                        checked
+                                    />
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div
+                    class="flex flex-col md:flex-row justify-between items-center gap-4"
+                >
+                    <div class="text-gray-400">
+                        <span id="totalDomains">13</span> total sites (<span
+                            id="singleSitesCount"
+                            >4</span
+                        >
+                        single, <span id="groupSitesCount">9</span> grouped)
+                    </div>
+                    <div class="flex gap-3">
+                        <button id="reloadBtn" class="btn btn-primary">
+                            <i class="fas fa-redo"></i>
+                            Reload
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Update group toggle state
+                function updateGroupToggleState(groupId) {
+                    const groupToggles = document.querySelectorAll(
+                        `.group-site-toggle[data-group="${groupId}"]`,
+                    );
+                    const groupToggle = document.querySelector(
+                        `.group-main-toggle[data-group="${groupId}"]`,
+                    );
+                    const statusBadge = document.getElementById(
+                        `${groupId}Status`,
+                    );
+
+                    let enabledCount = 0;
+                    const totalCount = groupToggles.length;
+
+                    groupToggles.forEach((toggle) => {
+                        if (toggle.checked) enabledCount++;
+                    });
+
+                    // Update group toggle
+                    groupToggle.checked = enabledCount === totalCount;
+
+                    // Update status badge
+                    if (enabledCount === totalCount) {
+                        statusBadge.textContent = "All Enabled";
+                        statusBadge.className = "status-badge status-enabled";
+                    } else if (enabledCount === 0) {
+                        statusBadge.textContent = "All Disabled";
+                        statusBadge.className = "status-badge status-disabled";
+                    } else {
+                        statusBadge.textContent = `${enabledCount}/${totalCount} Enabled`;
+                        statusBadge.className = "status-badge status-partial";
+                    }
+
+                    // Update site items
+                    groupToggles.forEach((toggle) => {
+                        const siteItem = toggle.closest(".site-item");
+                        const statusText =
+                            siteItem.querySelector(".status-text");
+
+                        if (toggle.checked) {
+                            siteItem.classList.remove("disabled");
+                            statusText.textContent = "Enabled";
+                            statusText.style.color = "#22c55e";
+                        } else {
+                            siteItem.classList.add("disabled");
+                            statusText.textContent = "Disabled";
+                            statusText.style.color = "#ef4444";
+                        }
+                    });
+
+                    updateStats();
+                }
+
+                // Update single site state
+                function updateSingleSiteState(siteUrl) {
+                    const toggle = document.querySelector(
+                        `.single-site-toggle[data-site="${siteUrl}"]`,
+                    );
+                    const statusText = toggle
+                        .closest(".single-site-card")
+                        .querySelector(".status-text");
+
+                    if (toggle.checked) {
+                        statusText.textContent = "Enabled";
+                        statusText.style.color = "#22c55e";
+                    } else {
+                        statusText.textContent = "Disabled";
+                        statusText.style.color = "#ef4444";
+                    }
+
+                    updateStats();
+                }
+
+                // Update statistics
+                function updateStats() {
+                    const allGroupToggles =
+                        document.querySelectorAll(".group-site-toggle");
+                    const allSingleToggles = document.querySelectorAll(
+                        ".single-site-toggle",
+                    );
+                    const allToggles = [
+                        ...allGroupToggles,
+                        ...allSingleToggles,
+                    ];
+                    const groupCards = document.querySelectorAll(".group-card");
+
+                    let enabledCount = 0;
+                    let disabledCount = 0;
+
+                    allToggles.forEach((toggle) => {
+                        if (toggle.checked) enabledCount++;
+                        else disabledCount++;
+                    });
+
+                    const totalSites = allToggles.length;
+                    const singleSites = allSingleToggles.length;
+                    const groupSites = allGroupToggles.length;
+
+                    document.getElementById("totalSites").textContent =
+                        totalSites;
+                    document.getElementById("enabledSites").textContent =
+                        enabledCount;
+                    document.getElementById("disabledSites").textContent =
+                        disabledCount;
+                    document.getElementById("totalGroups").textContent =
+                        groupCards.length;
+                    document.getElementById("totalDomains").textContent =
+                        totalSites;
+                    document.getElementById("singleSitesCount").textContent =
+                        singleSites;
+                    document.getElementById("groupSitesCount").textContent =
+                        groupSites;
+                }
+
+                // Event Listeners
+
+                // Group expand/collapse
+                document.querySelectorAll(".group-header").forEach((header) => {
+                    header.addEventListener("click", function (e) {
+                        if (
+                            e.target.closest(".toggle-switch") ||
+                            e.target.closest(".group-main-toggle")
+                        ) {
+                            return;
+                        }
+
+                        const groupContent = this.nextElementSibling;
+                        const isHidden = groupContent.style.display === "none";
+
+                        groupContent.style.display = isHidden
+                            ? "block"
+                            : "none";
+                        this.classList.toggle("collapsed");
+                    });
+                });
+
+                // Group main toggle
+                document
+                    .querySelectorAll(".group-main-toggle")
+                    .forEach((toggle) => {
+                        toggle.addEventListener("change", function () {
+                            const groupId = this.getAttribute("data-group");
+                            const isEnabled = this.checked;
+
+                            const groupToggles = document.querySelectorAll(
+                                `.group-site-toggle[data-group="${groupId}"]`,
+                            );
+                            groupToggles.forEach((siteToggle) => {
+                                siteToggle.checked = isEnabled;
+                            });
+
+                            updateGroupToggleState(groupId);
+                        });
+                    });
+
+                // Group site toggles
+                document
+                    .querySelectorAll(".group-site-toggle")
+                    .forEach((toggle) => {
+                        toggle.addEventListener("change", function () {
+                            const groupId = this.getAttribute("data-group");
+                            updateGroupToggleState(groupId);
+                        });
+                    });
+
+                // Single site toggles
+                document
+                    .querySelectorAll(".single-site-toggle")
+                    .forEach((toggle) => {
+                        toggle.addEventListener("change", function () {
+                            const site = this.getAttribute("data-site");
+                            updateSingleSiteState(site);
+                        });
+                    });
+
+                // Reload button
+                document
+                    .getElementById("reloadBtn")
+                    .addEventListener("click", function () {
+                        const btn = this;
+                        const originalHTML = btn.innerHTML;
+
+                        btn.innerHTML =
+                            '<i class="fas fa-spinner fa-spin"></i> Reloading...';
+                        btn.disabled = true;
+
+                        // Simulate reload action
+                        setTimeout(() => {
+                            btn.innerHTML = originalHTML;
+                            btn.disabled = false;
+
+                            // Show notification
+                            showNotification("Panel reloaded successfully");
+
+                            // For demonstration: randomly toggle some sites
+                            const allToggles = document.querySelectorAll(
+                                ".group-site-toggle, .single-site-toggle",
+                            );
+                            allToggles.forEach((toggle) => {
+                                if (Math.random() > 0.8) {
+                                    toggle.checked = !toggle.checked;
+
+                                    if (
+                                        toggle.classList.contains(
+                                            "group-site-toggle",
+                                        )
+                                    ) {
+                                        const groupId =
+                                            toggle.getAttribute("data-group");
+                                        updateGroupToggleState(groupId);
+                                    } else {
+                                        const site =
+                                            toggle.getAttribute("data-site");
+                                        updateSingleSiteState(site);
+                                    }
+                                }
+                            });
+                        }, 1000);
+                    });
+
+                // Logout button
+                document
+                    .getElementById("logoutBtn")
+                    .addEventListener("click", function () {
+                        const btn = this;
+                        const originalHTML = btn.innerHTML;
+
+                        btn.innerHTML =
+                            '<i class="fas fa-spinner fa-spin"></i> Logging out...';
+                        btn.disabled = true;
+
+                        // Simulate logout process
+                        setTimeout(() => {
+                            // Show logout confirmation
+                            showNotification("Logged out successfully");
+
+                            window.location.href = "/logout";
+                        }, 1500);
+                    });
+
+                // Show notification function
+                function showNotification(message) {
+                    // Create notification element
+                    const notification = document.createElement("div");
+                    notification.className = "notification";
+                    notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background-color: #0a0a0a;
+                    border: 1px solid #262626;
+                    border-left: 4px solid #3b82f6;
+                    border-radius: 0.375rem;
+                    padding: 1rem;
+                    color: white;
+                    font-size: 0.875rem;
+                    z-index: 1000;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+                    animation: slideIn 0.3s ease;
+                    max-width: 300px;
+                `;
+
+                    notification.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-info-circle text-blue"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                    // Add styles for animation
+                    const style = document.createElement("style");
+                    style.textContent = `
+                    @keyframes slideIn {
+                        from {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
+                `;
+                    document.head.appendChild(style);
+
+                    document.body.appendChild(notification);
+
+                    // Remove notification after 3 seconds
+                    setTimeout(() => {
+                        notification.style.animation =
+                            "slideIn 0.3s ease reverse";
+                        setTimeout(() => {
+                            if (notification.parentNode) {
+                                notification.parentNode.removeChild(
+                                    notification,
+                                );
+                            }
+                        }, 300);
+                    }, 3000);
+                }
+
+                // Initialize
+                const groups = ["google", "github", "internal"];
+                groups.forEach(updateGroupToggleState);
+
+                document
+                    .querySelectorAll(".single-site-toggle")
+                    .forEach((toggle) => {
+                        const site = toggle.getAttribute("data-site");
+                        updateSingleSiteState(site);
+                    });
+
+                updateStats();
+            });
+        </script>
+    </body>
+</html>

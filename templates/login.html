@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login - Website Control Panel</title>
+        <!-- Using Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="{{url_for('static', filename='login.css')}}"
+        />
+    </head>
+    <body>
+        <div class="login-wrapper">
+            <div class="login-card">
+                <div class="logo-header">
+                    <div class="logo-container">
+                        <div class="logo-icon">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <div class="logo-text">Control Panel</div>
+                    </div>
+                    <h1 class="login-title">Welcome Back</h1>
+                    <p class="login-subtitle">
+                        Enter your credentials to access the website control
+                        panel
+                    </p>
+                </div>
+
+                <form
+                    id="loginForm"
+                    class="login-form"
+                    method="POST"
+                    action="/login"
+                >
+                    <div class="form-group">
+                        <label class="form-label" for="email">
+                            <i class="fas fa-envelope"></i>
+                            Email Address
+                        </label>
+                        <input
+                            name="usr-email"
+                            type="email"
+                            id="email"
+                            class="form-input"
+                            placeholder="admin@example.com"
+                            required
+                            autocomplete="email"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">
+                            <i class="fas fa-lock"></i>
+                            Password
+                        </label>
+                        <div class="password-container">
+                            <input
+                                name="usr-passwd"
+                                type="password"
+                                id="password"
+                                class="form-input"
+                                placeholder="••••••••"
+                                required
+                                autocomplete="current-password"
+                            />
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="togglePassword"
+                            >
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="submitBtn"
+                    >
+                        <span class="btn-text">Sign In</span>
+                        <div class="spinner"></div>
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <p>Secure access to website control panel • v1.0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">
+            <i class="fas fa-info-circle"></i>
+            <span id="toastMessage">Message</span>
+        </div>
+
+        <script>
+            // Password visibility toggle
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+            });
+
+            // Custom checkbox
+            const rememberCheckbox = document.getElementById('remember');
+            const customCheckbox = document.getElementById('customCheckbox');
+            const rememberLabel = document.getElementById('rememberLabel');
+
+            rememberLabel.addEventListener('click', function() {
+                rememberCheckbox.checked = !rememberCheckbox.checked;
+                customCheckbox.classList.toggle('checked', rememberCheckbox.checked);
+            });
+
+            // Set initial checkbox state
+            customCheckbox.classList.toggle('checked', rememberCheckbox.checked);
+
+            // Form submission
+            const loginForm = document.getElementById('loginForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const spinner = submitBtn.querySelector('.spinner');
+            const btnText = submitBtn.querySelector('.btn-text');
+
+            loginForm.addEventListener('submit', function(e) {
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value.trim();
+
+                // Basic validation
+                if (!email || !password) {
+                    e.preventDefault();
+                    showToast('Please fill in all fields', 'error');
+                    return;
+                }
+
+                // Show loading state
+                submitBtn.disabled = true;
+                btnText.textContent = 'Signing in...';
+                spinner.style.display = 'block';
+            });
+
+            // Toast function
+            function showToast(message, type = "normal") {
+                const toast = document.getElementById("toast");
+                const msgEl = document.getElementById("toastMessage");
+                const icon = toast.querySelector('i');
+
+                // Reset classes and set new ones
+                toast.className = "toast";
+                if (type === "success") {
+                    toast.classList.add("success");
+                    icon.className = "fas fa-check-circle";
+                } else if (type === "error") {
+                    toast.classList.add("error");
+                    icon.className = "fas fa-exclamation-circle";
+                } else {
+                    icon.className = "fas fa-info-circle";
+                }
+
+                msgEl.textContent = message;
+                toast.classList.add("show");
+
+                // Hide after 3 seconds
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 3000);
+            }
+
+            // Auto-hide toast after page load if it's showing
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(() => {
+                    const toast = document.getElementById("toast");
+                    if (toast.classList.contains("show")) {
+                        toast.classList.remove("show");
+                    }
+                }, 3000);
+            });
+
+            {% if context['showToast'] %}
+            showToast("{{context['msg']}}", "{{context['type']}}")
+            {% endif %}
+        </script>
+    </body>
+</html>
