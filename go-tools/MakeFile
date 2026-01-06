@@ -1,0 +1,35 @@
+.PHONY: build install clean help
+
+# Binary name and output path
+BINARY_NAME=conf-mover
+BUILD_DIR=build
+INSTALL_PATH=/usr/local/bin/$(BINARY_NAME)
+
+# Go build flags
+GOFLAGS=-ldflags="-s -w" # Strip debug information for smaller binary
+
+help: ## Show this help message
+    @echo 'Usage: make [target]'
+    @echo ''
+    @echo 'Available targets:'
+    @awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  %-15s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+
+build: ## Build the Go binary
+    @echo "Building $(BINARY_NAME)..."
+    @mkdir -p $(BUILD_DIR)
+    go build $(GOFLAGS) -o $(BUILD_DIR)/$(BINARY_NAME) .
+    @echo "Build complete: $(BUILD_DIR)/$(BINARY_NAME)"
+
+install: build ## Install binary to system path (requires sudo)
+    @echo "Installing $(BINARY_NAME) to $(INSTALL_PATH)..."
+    @sudo install -m 755 $(BUILD_DIR)/$(BINARY_NAME) $(INSTALL_PATH)
+    @echo "Installation complete"
+
+clean: ## Remove build artifacts
+    @echo "Cleaning build directory..."
+    @rm -rf $(BUILD_DIR)
+    @echo "Clean complete"
+
+dev: ## Run in development mode with .env file
+    @echo "Running in development mode..."
+    go run main.go
